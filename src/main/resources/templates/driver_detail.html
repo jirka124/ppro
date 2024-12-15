@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Detail of ' + ${driver.name}"></title>
+</head>
+<body>
+<a th:href="@{'/drivers/edit/' + ${driver.id}}">EDIT</a><br>
+<a th:href="@{'/drivers/delete/' + ${driver.id}}">DELETE</a><br>
+<b>Name: </b> <span th:text="${driver.name}"></span><br>
+<b>Age: </b> <span th:text="${driver.age}"></span><br>
+<b>Salary: </b> <span th:text="${driver.salary}"></span>
+</body>
+</html>
