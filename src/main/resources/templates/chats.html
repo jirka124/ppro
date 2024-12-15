@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>My Application</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <style>
+    #chats {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+    }
+    #chats a {
+      text-decoration: none;
+    }
+    .chat {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .chat-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 128px;
+      aspect-ratio: 1/1;
+      background-color: #7B8EC5;
+    }
+    .chat-avatar > img {
+      width:80%;
+    }
+    .chat-user {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+      width: calc(100% - calc(128px + 8px));
+      padding: 8px;
+      background-color: rgba(204, 204, 204, 0.2);
+    }
+    .chat-user > b:nth-of-type(1) {
+      font-size: 28px;
+      color: #BDBDBD;
+    }
+    .chat-user > b:nth-of-type(2) {
+      font-size: 28px;
+      color: #757575;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h2>Day&Night</h2>
+  <a th:href="@{'/logout'}"><img th:src="@{/images/logout.png}" alt="Logout Image"></a>
+</header>
+<div id="cont">
+  <div id="chats">
+    <a th:href="@{'/chat/1'}">
+      <div class="chat">
+        <div class="chat-avatar rounded shadow">
+          <img th:src="@{/images/user.png}" alt="User Image">
+        </div>
+        <div class="chat-user rounded shadow">
+          <b>Julius78</b>
+          <b>49</b>
+        </div>
+      </div>
+    </a>
+    <a th:href="@{'/chat/2'}">
+      <div class="chat">
+        <div class="chat-avatar rounded shadow">
+          <img th:src="@{/images/user.png}" alt="User Image">
+        </div>
+        <div class="chat-user rounded shadow">
+          <b>Julius78</b>
+          <b>49</b>
+        </div>
+      </div>
+    </a>
+    <a th:href="@{'/chat/3'}">
+      <div class="chat">
+        <div class="chat-avatar rounded shadow">
+          <img th:src="@{/images/user.png}" alt="User Image">
+        </div>
+        <div class="chat-user rounded shadow">
+          <b>Julius78</b>
+          <b>49</b>
+        </div>
+      </div>
+    </a>
+    <a th:href="@{'/chat/4'}">
+      <div class="chat">
+        <div class="chat-avatar rounded shadow">
+          <img th:src="@{/images/user.png}" alt="User Image">
+        </div>
+        <div class="chat-user rounded shadow">
+          <b>Julius78</b>
+          <b>49</b>
+        </div>
+      </div>
+    </a>
+    <a th:href="@{'/chat/5'}">
+      <div class="chat">
+        <div class="chat-avatar rounded shadow">
+          <img th:src="@{/images/user.png}" alt="User Image">
+        </div>
+        <div class="chat-user rounded shadow">
+          <b>Julius78</b>
+          <b>49</b>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<nav>
+  <a th:href="@{'/'}">Swipovat</a>
+  <a th:href="@{'/chats'}" class="active">Chaty</a>
+</nav>
+</body>
+</html>
