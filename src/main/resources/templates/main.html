@@ -3,10 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <title>My Application</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        #cont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        #swipe {
+            display: flex;
+            flex-shrink: 1;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 400px;
+        }
+        #swipe-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #7B8EC5;
+        }
+        #swipe-avatar > img {
+            width:80%;
+        }
+        #swipe-user {
+            width: 100%;
+        }
+        #swipe-user-def {
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            width: 100%;
+        }
+        #swipe-user-def > b:nth-of-type(1) {
+            color: #BDBDBD;
+        }
+        #swipe-user-def > b:nth-of-type(2) {
+            color: #757575;
+        }
+        #swipe-user-des {
+            font-size: 18px;
+            width: 100%;
+            color: #BDBDBD;
+            white-space: pre-wrap;
+        }
+        #swipe-act {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
+        }
+        #swipe-act > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background-color: #D3DCF8;
+            transition: 0.2s all;
+        }
+        #swipe-act > button:hover, #swipe-act > button:active {
+            background-color: #A4B8F8;
+        }
+
+        #swipe-act > button > img {
+            width: 50%;
+        }
+        #swipe-act > button:nth-of-type(3) > img {
+            width: 90%;
+        }
+
+        #grps-ttl {
+            font-size: 38px;
+        }
+        #grps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 16px;
+            width: 100%;
+        }
+        .grp {
+            text-align: center;
+            width: 256px;
+        }
+        .grp > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #7B8EC5;
+        }
+        .grp > div > img {
+            width: 80%;
+        }
+        .grp > b {
+            font-size: 22px;
+            width: 100%;
+            margin-top: 6px;
+            color: #BDBDBD;
+        }
+    </style>
 </head>
-<body style="text-align: center;">
-<a th:href="@{'/cars/'}">List of Cars</a>
-<br>
-<a th:href="@{'/drivers/'}">List of Drivers</a>
+<body>
+    <header>
+        <h2>Day&Night</h2>
+        <a th:href="@{'/logout'}"><img th:src="@{/images/logout.png}" alt="Logout Image"></a>
+    </header>
+    <div id="cont">
+        <div id="swipe">
+            <div id="swipe-avatar" class="rounded shadow">
+                <img th:src="@{/images/user.png}" alt="User Image">
+            </div>
+            <div id="swipe-user">
+                <div id="swipe-user-def">
+                    <b>Julius78</b>
+                    <b>49</b>
+                </div>
+                <div id="swipe-user-des">
+                Nikdy nebudu zadaný, znáte to?
+                Ale tak co se dá dělat no...
+
+                Prostě je to jak to je :D
+                </div>
+            </div>
+            <div id="swipe-act">
+                <button class="shadow"><img th:src="@{/images/nope.png}" alt="Nope Image"></button>
+                <button class="shadow"><img th:src="@{/images/yes.png}" alt="Yes Image"></button>
+                <button class="shadow"><img th:src="@{/images/yes.png}" alt="Yes Image"></button>
+            </div>
+        </div>
+
+        <h2 id="grps-ttl">Oblíbené skupiny</h2>
+        <div id="grps">
+            <div class="grp">
+                <div class="rounded shadow">
+                    <img th:src="@{/images/group.png}" alt="Group Image">
+                </div>
+                <b>Volný večer</b>
+            </div>
+            <div class="grp">
+                <div class="rounded shadow">
+                    <img th:src="@{/images/group.png}" alt="Group Image">
+                </div>
+                <b>Volný večer</b>
+            </div>
+            <div class="grp">
+                <div class="rounded shadow">
+                    <img th:src="@{/images/group.png}" alt="Group Image">
+                </div>
+                <b>Volný večer</b>
+            </div>
+            <div class="grp">
+                <div class="rounded shadow">
+                    <img th:src="@{/images/group.png}" alt="Group Image">
+                </div>
+                <b>Volný večer</b>
+            </div>
+            <div class="grp">
+                <div class="rounded shadow">
+                    <img th:src="@{/images/group.png}" alt="Group Image">
+                </div>
+                <b>Volný večer</b>
+            </div>
+            <div class="grp">
+                <div class="rounded shadow">
+                    <img th:src="@{/images/group.png}" alt="Group Image">
+                </div>
+                <b>Volný večer</b>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <a th:href="@{'/'}" class="active">Swipovat</a>
+        <a th:href="@{'/chats'}">Chaty</a>
+    </nav>
+<!-- <a th:href="@{'/cars/create'}">New Car</a>
+<ul>
+    <li th:each="car: ${cars}">
+        <a th:href="@{'/cars/detail/' + ${car.id}}">
+            <span th:text="${car.spz}"></span>
+        </a>
+    </li>
+</ul>
+-->
 </body>
 </html>
