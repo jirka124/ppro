@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>My Application</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <style>
+    #cont {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    #medailon {
+      flex-shrink: 0;
+      flex-grow: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #medailon-avatar {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      aspect-ratio: 1/1;
+      background-color: #7B8EC5;
+    }
+    #medailon-avatar > img {
+      width: 80%;
+    }
+    #medailon-user {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      width: 100%;
+    }
+    #medailon-user > p {
+      font-size: 20px;
+      width: 100%;
+      color: #BDBDBD;
+    }
+    #medailon-user > div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      width: 100%;
+    }
+    #medailon-user > div > b:nth-of-type(1) {
+      font-size: 24px;
+      color: #BDBDBD;
+    }
+    #medailon-user > div > b:nth-of-type(2) {
+      font-size: 20px;
+      color: #757575;
+    }
+    #chat {
+      flex-shrink: 1;
+      flex-grow: 1;
+      min-height: 180px;
+      overflow-y: auto;
+    }
+    .chat-init {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 8px;
+      background-color: black;
+      color: #BDBDBD;
+    }
+    .chat-init > img {
+      height: 20px;
+    }
+    #chat-msgs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      width: 100%;
+      padding: 16px 0;
+    }
+    .chat-msg {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+    }
+    .chat-msg.quest {
+      align-items: flex-start;
+    }
+    .chat-msg.own {
+      align-items: flex-end;
+    }
+    .chat-msg > div {
+      font-size: 20px;
+      padding: 8px;
+    }
+    .chat-msg.quest > div {
+      background-color: rgba(204, 204, 204, 0.2);
+      color: #BDBDBD;
+    }
+    .chat-msg.own> div {
+      background-color: rgba(101, 101, 101, 0.2);
+      color: #757575;
+    }
+    .chat-msg > i {
+      font-size: 14px;
+      color: #BDBDBD;
+    }
+
+    #interact {
+      flex-shrink: 0;
+      flex-grow: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+    }
+    #interact > input {
+      font-size: 18px;
+      flex-shrink: 1;
+      flex-grow: 1;
+      border: none;
+      padding: 8px;
+      background-color: #F2F2F2;
+    }
+    #interact > button {
+      font-size: 22px;
+      flex-shrink: 0;
+      flex-grow: 0;
+      padding: 8px 12px;
+      background-color: #7B8EC5;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h2>Day&Night</h2>
+  <a th:href="@{'/logout'}"><img th:src="@{/images/logout.png}" alt="Logout Image"></a>
+</header>
+<div id="cont">
+  <div id="medailon">
+    <div id="medailon-avatar" class="rounded shadow">
+      <img th:src="@{/images/user.png}" alt="User Image">
+    </div>
+    <div id="medailon-user">
+      <p>Chat s uživatelem</p>
+      <div>
+        <b>Julius78</b>
+        <b>49</b>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat">
+    <div id="chat-init-1" class="chat-init rounded shadow">
+      <p>Propojení začalo společným srdcem</p>
+      <img th:src="@{/images/yes.png}" alt="Yes Image">
+    </div>
+    <div id="chat-init-2" class="chat-init rounded shadow">
+      <p>Propojení začalo obrovským srdcem</p>
+      <img th:src="@{/images/yes.png}" alt="Yes Image">
+    </div>
+    <div id="chat-msgs">
+      <div class="chat-msg quest">
+        <div class="rounded shadow">Ahoj jak se máš? Jde to dobře ??</div>
+        <i>Odesláno uživatelem Julius78 v 24.10.2024 17:45:00</i>
+      </div>
+      <div class="chat-msg quest">
+        <div class="rounded shadow">Hej pls odepiš</div>
+        <i>Odesláno uživatelem Julius78 v 24.10.2024 17:48:00</i>
+      </div>
+      <div class="chat-msg own">
+        <div class="rounded shadow">No jo jde to celkem dobře, co ty?</div>
+        <i>Odesláno Vámi v 24.10.2024 18:45:00</i>
+      </div>
+    </div>
+  </div>
+
+  <div id="interact">
+    <input class="rounded shadow" type="text" placeholder="Ukázková zpráva pro příjemce...">
+    <button class="rounded shadow">Odeslat</button>
+  </div>
+</div>
+<nav>
+  <a th:href="@{'/'}">Swipovat</a>
+  <a th:href="@{'/chats'}" class="active">Chaty</a>
+</nav>
+</body>
+</html>
