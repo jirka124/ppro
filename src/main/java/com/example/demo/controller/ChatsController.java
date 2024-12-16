@@ -1,18 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Car;
-import com.example.demo.model.Reaction;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import com.example.demo.security.MyUserDetails;
+import com.example.demo.service.MessageService;
 import com.example.demo.service.ReactionService;
 import com.example.demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +25,18 @@ public class ChatsController {
 
     private UserService userService;
     private ReactionService reactionService;
+    private MessageService messageService;
 
     @Autowired
-    public ChatsController(UserService userService, ReactionService reactionService) {
+    public ChatsController(UserService userService, ReactionService reactionService, MessageService messageService) {
         this.userService = userService;
         this.reactionService = reactionService;
+        this.messageService = messageService;
+    }
+
+    private List<User> getChats(Long userId, List<User> users, List<Reaction> reactionsFromUser, List<Reaction> reactionsToUser) {
+        // TODO
+        return null;
     }
 
     @GetMapping("/chats")
@@ -43,10 +52,6 @@ public class ChatsController {
         List<User> users = userService.getAllUsers();
         List<Reaction> fromReactions = reactionService.getAllFromReactions(fromUser.getId());
         List<Reaction> toReactions = reactionService.getAllToReactions(fromUser.getId());
-
-        List<Reaction> allReactions = new ArrayList<>();
-        allReactions.addAll(fromReactions);
-        allReactions.addAll(toReactions);
 
         List<User> chatUsers = new ArrayList<>();
 
@@ -88,8 +93,74 @@ public class ChatsController {
     }
 
     @GetMapping("/chat/{id}")
-    public String chat(Model model, @PathVariable long id){
-        // model.addAttribute("chats", null);
+    public String chat(Model model, @PathVariable long id) throws Exception {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails loggedUser;
+        User fromUser;
+        User toUser;
+
+        if (principal instanceof MyUserDetails) loggedUser = ((MyUserDetails) principal);
+        else throw new Exception("User not logged");
+
+        toUser = userService.getUserById(id);
+        if(toUser == null)  throw new Exception("Unknown chat user");
+
+        fromUser = loggedUser.getUser();
+        Reaction fromReaction = reactionService.getReactionByIds(fromUser.getId(), toUser.getId());
+        Reaction toReaction = reactionService.getReactionByIds(toUser.getId(), fromUser.getId());
+
+        boolean mayChat = false;
+        String matchType = "one";
+        if(fromReaction != null && fromReaction.getType() == 3) mayChat = true;
+        else if(toReaction != null && toReaction.getType() == 3) mayChat = true;
+        else if(fromReaction != null && toReaction != null && fromReaction.getType() == 2 && toReaction.getType() == 2) {
+            matchType = "both";
+            mayChat = true;
+        }
+
+        if(!mayChat) throw new Exception("Not allowed to chat with user");
+
+        List<Message> chats = messageService.getMessagesByIds(fromUser.getId(), toUser.getId());
+
+        model.addAttribute("chatUser", toUser);
+        model.addAttribute("matchType", matchType);
+        model.addAttribute("chats", chats);
+        model.addAttribute("userSelf", fromUser);
+
         return "chat";
+    }
+
+    @PostMapping("/chat/{id}/send")
+    public String save(@RequestParam("message") String message, @PathVariable long id) throws Exception {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails loggedUser;
+        User fromUser;
+        User toUser;
+
+        if (principal instanceof MyUserDetails) loggedUser = ((MyUserDetails) principal);
+        else throw new Exception("User not logged");
+
+        toUser = userService.getUserById(id);
+        if(toUser == null)  throw new Exception("Unknown chat user");
+
+        fromUser = loggedUser.getUser();
+        Reaction fromReaction = reactionService.getReactionByIds(fromUser.getId(), toUser.getId());
+        Reaction toReaction = reactionService.getReactionByIds(toUser.getId(), fromUser.getId());
+
+        boolean mayChat = false;
+        if(fromReaction != null && fromReaction.getType() == 3) mayChat = true;
+        else if(toReaction != null && toReaction.getType() == 3) mayChat = true;
+        else if(fromReaction != null && toReaction != null && fromReaction.getType() == 2 && toReaction.getType() == 2) mayChat = true;
+
+        if(!mayChat) throw new Exception("Not allowed to chat with user");
+
+        Message msg = new Message();
+        msg.setMessage(message);
+        msg.setSentDateTime(LocalDateTime.now());
+        msg.setFromUser(fromUser);
+        msg.setToUser(toUser);
+
+        messageService.saveMessage(msg);
+        return "redirect:/chat/" + id;
     }
 }

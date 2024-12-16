@@ -38,6 +38,12 @@ public class User {
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Reaction> receivedReactions;
 
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> sentMessages;
+
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> receivedMessages;
+
     public Long getId() {
         return id;
     }
