@@ -1,6 +1,13 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -8,9 +15,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(min = 1, max = 12)
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
+
+
     private String role;
+
+    @Size(min = 1, max = 150)
+    @NotBlank
+    private String description;
+
+    private LocalDate birthDate;
+
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Reaction> sentReactions;
+
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Reaction> receivedReactions;
 
     public Long getId() {
         return id;
@@ -42,5 +68,40 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+    public Set<Reaction> getSentReactions() {
+        return sentReactions;
+    }
+
+    public void setSentReactions(Set<Reaction> sentReactions) {
+        this.sentReactions = sentReactions;
+    }
+
+    public Set<Reaction> getReceivedReactions() {
+        return receivedReactions;
+    }
+
+    public void setReceivedReactions(Set<Reaction> receivedReactions) {
+        this.receivedReactions = receivedReactions;
+    }
+
+    public int getAge() {
+        return Period.between(this.getBirthDate(), LocalDate.now()).getYears();
     }
 }

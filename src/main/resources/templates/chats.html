@@ -57,61 +57,21 @@
 </header>
 <div id="cont">
   <div id="chats">
-    <a th:href="@{'/chat/1'}">
+
+    <p th:if="${chatUsersCount < 1}">Zatím žádná propojení, tak běž swipovat!</p>
+
+    <a th:each="user: ${chatUsers}" th:href="@{'/chat/' + ${user.id}}">
       <div class="chat">
         <div class="chat-avatar rounded shadow">
           <img th:src="@{/images/user.png}" alt="User Image">
         </div>
         <div class="chat-user rounded shadow">
-          <b>Julius78</b>
-          <b>49</b>
+          <b th:text="${user.username}"></b>
+          <b th:text="${user.getAge()}"></b>
         </div>
       </div>
     </a>
-    <a th:href="@{'/chat/2'}">
-      <div class="chat">
-        <div class="chat-avatar rounded shadow">
-          <img th:src="@{/images/user.png}" alt="User Image">
-        </div>
-        <div class="chat-user rounded shadow">
-          <b>Julius78</b>
-          <b>49</b>
-        </div>
-      </div>
-    </a>
-    <a th:href="@{'/chat/3'}">
-      <div class="chat">
-        <div class="chat-avatar rounded shadow">
-          <img th:src="@{/images/user.png}" alt="User Image">
-        </div>
-        <div class="chat-user rounded shadow">
-          <b>Julius78</b>
-          <b>49</b>
-        </div>
-      </div>
-    </a>
-    <a th:href="@{'/chat/4'}">
-      <div class="chat">
-        <div class="chat-avatar rounded shadow">
-          <img th:src="@{/images/user.png}" alt="User Image">
-        </div>
-        <div class="chat-user rounded shadow">
-          <b>Julius78</b>
-          <b>49</b>
-        </div>
-      </div>
-    </a>
-    <a th:href="@{'/chat/5'}">
-      <div class="chat">
-        <div class="chat-avatar rounded shadow">
-          <img th:src="@{/images/user.png}" alt="User Image">
-        </div>
-        <div class="chat-user rounded shadow">
-          <b>Julius78</b>
-          <b>49</b>
-        </div>
-      </div>
-    </a>
+
   </div>
 </div>
 <nav>

@@ -20,6 +20,10 @@ public class MyUserDetails implements UserDetails {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();

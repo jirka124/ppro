@@ -61,7 +61,7 @@
             gap: 8px;
             width: 100%;
         }
-        #swipe-act > button {
+        #swipe-act button {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -71,14 +71,14 @@
             background-color: #D3DCF8;
             transition: 0.2s all;
         }
-        #swipe-act > button:hover, #swipe-act > button:active {
+        #swipe-act button:hover, #swipe-act > button:active {
             background-color: #A4B8F8;
         }
 
-        #swipe-act > button > img {
+        #swipe-act button > img {
             width: 50%;
         }
-        #swipe-act > button:nth-of-type(3) > img {
+        #swipe-act a:nth-of-type(3) button > img {
             width: 90%;
         }
 
@@ -121,26 +121,23 @@
         <a th:href="@{'/logout'}"><img th:src="@{/images/logout.png}" alt="Logout Image"></a>
     </header>
     <div id="cont">
-        <div id="swipe">
+        <p th:if="${swipeUser == null}">Žádní další lidé v tvém okolí :(</p>
+
+        <div id="swipe" th:if="${swipeUser != null}">
             <div id="swipe-avatar" class="rounded shadow">
                 <img th:src="@{/images/user.png}" alt="User Image">
             </div>
             <div id="swipe-user">
                 <div id="swipe-user-def">
-                    <b>Julius78</b>
-                    <b>49</b>
+                    <b th:text="${swipeUser.username}"></b>
+                    <b th:text="${swipeUser.getAge()}"></b>
                 </div>
-                <div id="swipe-user-des">
-                Nikdy nebudu zadaný, znáte to?
-                Ale tak co se dá dělat no...
-
-                Prostě je to jak to je :D
-                </div>
+                <div id="swipe-user-des" th:text="${swipeUser.description}"></div>
             </div>
             <div id="swipe-act">
-                <button class="shadow"><img th:src="@{/images/nope.png}" alt="Nope Image"></button>
-                <button class="shadow"><img th:src="@{/images/yes.png}" alt="Yes Image"></button>
-                <button class="shadow"><img th:src="@{/images/yes.png}" alt="Yes Image"></button>
+                <a th:href="@{'/reactions/react?to=' + ${swipeUser.id} + '&type=1'}"><button class="shadow"><img th:src="@{/images/nope.png}" alt="Nope Image"></button></a>
+                <a th:href="@{'/reactions/react?to=' + ${swipeUser.id} + '&type=2'}"><button class="shadow"><img th:src="@{/images/yes.png}" alt="Yes Image"></button></a>
+                <a th:href="@{'/reactions/react?to=' + ${swipeUser.id} + '&type=3'}"><button class="shadow"><img th:src="@{/images/yes.png}" alt="Yes Image"></button></a>
             </div>
         </div>
 
