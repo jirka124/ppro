@@ -38,6 +38,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/blog/**").permitAll()
+                        .requestMatchers("/signup").permitAll()
+                        .requestMatchers("/signup/create").permitAll()
+                        .requestMatchers("/css/main.css").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Application</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        * {
+            text-align: center;
+        }
+        h2 {
+            color: #BDBDBD;
+        }
+        input, textarea {
+            padding: 8px;
+            background-color: #F2F2F2;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h2>Day&Night</h2>
+</header>
+<div id="cont">
+    <h2>Vytvořit účet</h2>
+    <form id="formm" th:object="${user}" method="post" th:action="@{'/signup/create'}">
+        Uživatelské jméno<br>
+        <input class="rounded shadow" type="text" th:field="*{username}">
+        <span style="color: red;" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br>
+        Heslo<br>
+        <input class="rounded shadow" type="password" th:field="*{password}">
+        <span style="color: red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br>
+        Datum narození<br>
+        <input class="rounded shadow" type="date" th:field="*{birthDate}">
+        <span style="color: red;" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></span><br>
+        Popisek<br>
+        <textarea class="rounded shadow" th:field="*{description}"></textarea>
+        <span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span><br>
+        <br>
+        <input type="submit" value="Vytvořit">
+    </form>
+
+    <a th:href="@{'/login'}">Nebo se přihlásit?</a>
+</div>
+</body>
+</html>
