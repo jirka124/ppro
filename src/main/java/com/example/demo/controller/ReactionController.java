@@ -40,12 +40,6 @@ public class ReactionController {
 
         fromUser = loggedUser.getUser();
 
-        /*
-        System.out.println("Logged in user: " + loggedUser.getUsername());
-        System.out.println("Reacted to user: " + toUser.getUsername());
-        System.out.println("REACTION: " + type);
-        */
-
         Reaction reaction = new Reaction();
         reaction.setFromUser(fromUser);
         reaction.setToUser(toUser);
