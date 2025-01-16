@@ -74,6 +74,12 @@ public class Demo6Application {
             r3.setToUser(u4);
             reactionService.saveReaction(r3);
 
+            Reaction r4 = new Reaction();
+            r4.setType(1);
+            r4.setFromUser(u3);
+            r4.setToUser(u1);
+            reactionService.saveReaction(r4);
+
             Group g1 = new Group();
             g1.setGroupName("Skupina 1");
             groupService.saveGroup(g1);

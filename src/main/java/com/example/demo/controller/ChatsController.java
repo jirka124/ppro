@@ -59,10 +59,10 @@ public class ChatsController {
             boolean isChatable = false;
 
             for(Reaction r : fromReactions) {
-                if(r.getType() == 2) {
+                if(r.getToUser().getId().equals(user.getId()) && r.getType() == 2) {
                     // must be present on both sides
                     for(Reaction rr : toReactions) {
-                        if(rr.getFromUser().getId().equals(user.getId()) && r.getType() > 1) isChatable = true;
+                        if(rr.getFromUser().getId().equals(user.getId()) && rr.getType() > 1) isChatable = true;
                     }
                 }
                 else if(r.getType() == 3) {
@@ -72,10 +72,10 @@ public class ChatsController {
             }
 
             for(Reaction r : toReactions) {
-                if(r.getType() == 2) {
+                if(r.getFromUser().getId().equals(user.getId()) && r.getType() == 2) {
                     // must be present on both sides
                     for(Reaction rr : fromReactions) {
-                        if(rr.getToUser().getId().equals(user.getId()) && r.getType() > 1) isChatable = true;
+                        if(rr.getToUser().getId().equals(user.getId()) && rr.getType() > 1) isChatable = true;
                     }
                 }
                 else if(r.getType() == 3) {
