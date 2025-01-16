@@ -44,6 +44,9 @@ public class User {
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Message> receivedMessages;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<GroupMembership> groupMemberships;
+
     public Long getId() {
         return id;
     }
@@ -109,5 +112,13 @@ public class User {
 
     public int getAge() {
         return Period.between(this.getBirthDate(), LocalDate.now()).getYears();
+    }
+
+    public Set<GroupMembership> getGroupMemberships() {
+        return groupMemberships;
+    }
+
+    public void setGroupMemberships(Set<GroupMembership> groupMemberships) {
+        this.groupMemberships = groupMemberships;
     }
 }

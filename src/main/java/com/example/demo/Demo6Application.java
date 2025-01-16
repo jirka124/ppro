@@ -1,12 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.model.Message;
-import com.example.demo.model.Reaction;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import com.example.demo.repository.MessageRepository;
-import com.example.demo.service.MessageService;
-import com.example.demo.service.ReactionService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,14 +19,18 @@ public class Demo6Application {
 
     private UserService userService;
     private ReactionService reactionService;
+    private GroupService groupService;
+    private GroupMembershipService groupMembershipService;
     private MessageService messageService;
 
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public Demo6Application(UserService userService, ReactionService reactionService, MessageService messageService, PasswordEncoder passwordEncoder) {
+    public Demo6Application(UserService userService, ReactionService reactionService, GroupMembershipService groupMembershipService, GroupService groupService, MessageService messageService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.reactionService = reactionService;
+        this.groupService = groupService;
+        this.groupMembershipService = groupMembershipService;
         this.messageService = messageService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -73,6 +73,28 @@ public class Demo6Application {
             r3.setFromUser(u1);
             r3.setToUser(u4);
             reactionService.saveReaction(r3);
+
+            Group g1 = new Group();
+            g1.setGroupName("Skupina 1");
+            groupService.saveGroup(g1);
+
+            Group g2 = new Group();
+            g2.setGroupName("Skupina 2");
+            groupService.saveGroup(g2);
+
+            Group g3 = new Group();
+            g3.setGroupName("Skupina 3");
+            groupService.saveGroup(g3);
+
+            GroupMembership gm1 = new GroupMembership();
+            gm1.setUser(u1);
+            gm1.setGroup(g1);
+            groupMembershipService.saveGroupMembership(gm1);
+
+            GroupMembership gm2 = new GroupMembership();
+            gm2.setUser(u1);
+            gm2.setGroup(g3);
+            groupMembershipService.saveGroupMembership(gm2);
 
             Message m1 = new Message();
             m1.setMessage("Ahoj jak se máš?");

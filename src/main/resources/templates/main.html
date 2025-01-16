@@ -102,8 +102,14 @@
             justify-content: center;
             width: 100%;
             aspect-ratio: 1/1;
+        }
+        .grp.member > div {
             background-color: #7B8EC5;
         }
+        .grp.not-member > div {
+            background-color: #D3DCF8;
+        }
+
         .grp > div > img {
             width: 80%;
         }
@@ -143,56 +149,27 @@
 
         <h2 id="grps-ttl">Oblíbené skupiny</h2>
         <div id="grps">
-            <div class="grp">
-                <div class="rounded shadow">
-                    <img th:src="@{/images/group.png}" alt="Group Image">
+            <a th:href="@{'/group/toggle/' + ${group.id}}" th:each="group: ${memberGroupList}">
+                <div class="grp member">
+                    <div class="rounded shadow">
+                        <img th:src="@{/images/group.png}" alt="Group Image">
+                    </div>
+                    <b th:text="${group.groupName}"></b>
                 </div>
-                <b>Volný večer</b>
-            </div>
-            <div class="grp">
-                <div class="rounded shadow">
-                    <img th:src="@{/images/group.png}" alt="Group Image">
+            </a>
+            <a th:href="@{'/group/toggle/' + ${group.id}}" th:each="group: ${notMemberGroupList}">
+                <div class="grp not-member">
+                    <div class="rounded shadow">
+                        <img th:src="@{/images/group.png}" alt="Group Image">
+                    </div>
+                    <b th:text="${group.groupName}"></b>
                 </div>
-                <b>Volný večer</b>
-            </div>
-            <div class="grp">
-                <div class="rounded shadow">
-                    <img th:src="@{/images/group.png}" alt="Group Image">
-                </div>
-                <b>Volný večer</b>
-            </div>
-            <div class="grp">
-                <div class="rounded shadow">
-                    <img th:src="@{/images/group.png}" alt="Group Image">
-                </div>
-                <b>Volný večer</b>
-            </div>
-            <div class="grp">
-                <div class="rounded shadow">
-                    <img th:src="@{/images/group.png}" alt="Group Image">
-                </div>
-                <b>Volný večer</b>
-            </div>
-            <div class="grp">
-                <div class="rounded shadow">
-                    <img th:src="@{/images/group.png}" alt="Group Image">
-                </div>
-                <b>Volný večer</b>
-            </div>
+            </a>
         </div>
     </div>
     <nav>
         <a th:href="@{'/'}" class="active">Swipovat</a>
         <a th:href="@{'/chats'}">Chaty</a>
     </nav>
-<!-- <a th:href="@{'/cars/create'}">New Car</a>
-<ul>
-    <li th:each="car: ${cars}">
-        <a th:href="@{'/cars/detail/' + ${car.id}}">
-            <span th:text="${car.spz}"></span>
-        </a>
-    </li>
-</ul>
--->
 </body>
 </html>
